@@ -1,9 +1,11 @@
 "use client";
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, LogOut, User } from 'lucide-react';
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 
 interface NavbarProps {
   currentPage?: string;
@@ -11,6 +13,14 @@ interface NavbarProps {
 
 export default function Navbar({ currentPage = '' }: NavbarProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { user, isAuthenticated, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push('/');
+    setMobileMenuOpen(false);
+  };
 
   const navLinks = [
     { href: '/', label: 'Accueil' },
@@ -57,19 +67,43 @@ export default function Navbar({ currentPage = '' }: NavbarProps) {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/login">
-              <Button
-                variant="ghost"
-                className="text-white hover:bg-white/10 hover:text-white border-none"
-              >
-                Connexion
-              </Button>
-            </Link>
-            <Link href="/register">
-              <Button className="bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white border-none shadow-lg shadow-[#2563EB]/50">
-                Commencer
-              </Button>
-            </Link>
+            {isAuthenticated ? (
+              <>
+                <Link href="/dashboard">
+                  <Button
+                    variant="ghost"
+                    className="text-white hover:bg-white/10 hover:text-white border-none"
+                  >
+                    <User className="w-4 h-4 mr-2" />
+                    {user?.name?.split(' ')[0] || 'Profil'}
+                  </Button>
+                </Link>
+                <Button
+                  onClick={handleLogout}
+                  variant="ghost"
+                  className="text-red-400 hover:bg-red-500/10 hover:text-red-300 border-none"
+                >
+                  <LogOut className="w-4 h-4 mr-2" />
+                  Déconnexion
+                </Button>
+              </>
+            ) : (
+              <>
+                <Link href="/login">
+                  <Button
+                    variant="ghost"
+                    className="text-white hover:bg-white/10 hover:text-white border-none"
+                  >
+                    Connexion
+                  </Button>
+                </Link>
+                <Link href="/register">
+                  <Button className="bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white border-none shadow-lg shadow-[#2563EB]/50">
+                    Commencer
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -99,19 +133,43 @@ export default function Navbar({ currentPage = '' }: NavbarProps) {
               </Link>
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t border-white/10">
-              <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
-                <Button
-                  variant="ghost"
-                  className="w-full text-white hover:bg-white/10 hover:text-white border-none"
-                >
-                  Connexion
-                </Button>
-              </Link>
-              <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
-                <Button className="w-full bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white border-none shadow-lg shadow-[#2563EB]/50">
-                  Commencer
-                </Button>
-              </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                    <Button
+                      variant="ghost"
+                      className="w-full text-white hover:bg-white/10 hover:text-white border-none"
+                    >
+                      <User className="w-4 h-4 mr-2" />
+                      {user?.name?.split(' ')[0] || 'Profil'}
+                    </Button>
+                  </Link>
+                  <Button
+                    onClick={handleLogout}
+                    variant="ghost"
+                    className="w-full text-red-400 hover:bg-red-500/10 hover:text-red-300 border-none"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Déconnexion
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" onClick={() => setMobileMenuOpen(false)}>
+                    <Button
+                      variant="ghost"
+                      className="w-full text-white hover:bg-white/10 hover:text-white border-none"
+                    >
+                      Connexion
+                    </Button>
+                  </Link>
+                  <Link href="/register" onClick={() => setMobileMenuOpen(false)}>
+                    <Button className="w-full bg-gradient-to-r from-[#2563EB] to-[#1D4ED8] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white border-none shadow-lg shadow-[#2563EB]/50">
+                      Commencer
+                    </Button>
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

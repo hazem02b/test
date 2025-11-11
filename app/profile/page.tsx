@@ -24,12 +24,15 @@ import { Button } from '@/components/ui/button';
 import ModernBackground from '@/components/ModernBackground';
 import FloatingParticles from '@/components/FloatingParticles';
 import Link from 'next/link';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { useAuth } from '@/contexts/AuthContext';
 
 export default function ProfilePage() {
+  const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
-    fullName: "Jean Dupont",
-    email: "jean.dupont@exemple.com",
+    fullName: user?.name || "Utilisateur",
+    email: user?.email || "",
     phone: "+216 12 345 678",
     location: "Tunis, Tunisie",
     bio: "Étudiant passionné en informatique, spécialisé en développement web full stack. À la recherche d'un stage pour mettre en pratique mes compétences.",
@@ -65,7 +68,8 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-[#0A0F1E]">
+    <ProtectedRoute>
+      <div className="min-h-screen relative overflow-hidden bg-[#0A0F1E]">
       <ModernBackground />
       <FloatingParticles />
 
@@ -391,5 +395,6 @@ export default function ProfilePage() {
         </div>
       </section>
     </div>
+    </ProtectedRoute>
   );
 }

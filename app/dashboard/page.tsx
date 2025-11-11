@@ -21,6 +21,8 @@ import { Button } from '@/components/ui/button';
 import ModernBackground from '@/components/ModernBackground';
 import FloatingParticles from '@/components/FloatingParticles';
 import Link from 'next/link';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import { useAuth } from '@/contexts/AuthContext';
 
 const MOCK_APPLICATIONS = [
   {
@@ -83,6 +85,7 @@ const MOCK_NOTIFICATIONS = [
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState<'overview' | 'applications' | 'notifications'>('overview');
+  const { user } = useAuth();
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -113,7 +116,8 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen relative overflow-hidden bg-[#0A0F1E]">
+    <ProtectedRoute>
+      <div className="min-h-screen relative overflow-hidden bg-[#0A0F1E]">
       <ModernBackground />
       <FloatingParticles />
 
@@ -143,7 +147,7 @@ export default function DashboardPage() {
                 <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
               </button>
               <div className="w-10 h-10 rounded-full bg-gradient-to-r from-[#2563EB] to-[#7C3AED] flex items-center justify-center text-white font-semibold cursor-pointer">
-                JD
+                {user?.name?.split(' ').map(n => n[0]).join('').toUpperCase() || 'U'}
               </div>
             </div>
           </div>
@@ -157,7 +161,7 @@ export default function DashboardPage() {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
               <h1 className="text-3xl font-bold text-white mb-2">
-                Bienvenue, <span className="bg-gradient-to-r from-[#60A5FA] to-[#A78BFA] bg-clip-text text-transparent">Jean Dupont</span> 👋
+                Bienvenue, <span className="bg-gradient-to-r from-[#60A5FA] to-[#A78BFA] bg-clip-text text-transparent">{user?.name || 'Utilisateur'}</span> 👋
               </h1>
               <p className="text-gray-300">
                 Continuez votre progression vers votre stage idéal
@@ -337,5 +341,6 @@ export default function DashboardPage() {
         </div>
       </section>
     </div>
+    </ProtectedRoute>
   );
 }
