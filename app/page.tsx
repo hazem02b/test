@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowRight, Sparkles, Users, TrendingUp, MessageCircle, Award, BookOpen, Star, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ModernBackground from '@/components/ModernBackground';
@@ -20,10 +21,12 @@ export default function Home() {
             <Link href="/" className="flex items-center gap-3 group cursor-pointer">
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB] to-[#7C3AED] rounded-xl blur-md opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                <img 
-                  src="/logo.png" 
+                <Image 
+                  src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=100&h=100&fit=crop"
                   alt="Forstek Logo" 
-                  className=className="relative z-20 h-12 w-12 rounded-xl object-cover shadow-lg group-hover:shadow-xl transition-shadow"
+                  width={48}
+                  height={48}
+                  className="relative z-20 rounded-xl object-cover shadow-lg group-hover:shadow-xl transition-shadow"
                 />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-[#60A5FA] to-[#A78BFA] bg-clip-text text-transparent tracking-tight">Forstek</span>
@@ -112,13 +115,12 @@ export default function Home() {
             <div className="absolute inset-0 bg-gradient-to-r from-[#2563EB]/40 to-[#7C3AED]/40 rounded-3xl blur-3xl group-hover:blur-[100px] transition-all duration-500"></div>
             <div className="relative backdrop-blur-xl bg-white/5 rounded-3xl p-6 border-2 border-white/20 shadow-2xl hover:border-white/30 transition-all duration-300 hover:shadow-[0_0_50px_rgba(37,99,235,0.3)]">
               <div className="relative overflow-hidden rounded-2xl">
-                <img 
-                  src="/forstek-slogan.jpg"
+                <Image 
+                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop"
                   alt="Slogan Forstek"
+                  width={600}
+                  height={400}
                   className="w-full h-[400px] object-cover rounded-2xl transform group-hover:scale-105 transition-transform duration-500"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1200&auto=format&fit=crop";
-                  }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
@@ -360,10 +362,12 @@ export default function Home() {
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-4">
-                <img 
-                  src="/logo.png" 
+                <Image 
+                  src="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=100&h=100&fit=crop"
                   alt="Forstek Logo" 
-                  className="h-10 w-10 rounded-xl"
+                  width={40}
+                  height={40}
+                  className="rounded-xl"
                 />
                 <span className="text-2xl font-bold bg-gradient-to-r from-[#60A5FA] to-[#A78BFA] bg-clip-text text-transparent">Forstek</span>
               </div>
