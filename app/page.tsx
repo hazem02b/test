@@ -23,7 +23,7 @@ export default function Home() {
                 <img 
                   src="/logo.png" 
                   alt="Forstek Logo" 
-                  className="relative h-12 w-12 rounded-xl object-cover shadow-lg group-hover:shadow-xl transition-shadow"
+                  className=className="relative z-20 h-12 w-12 rounded-xl object-cover shadow-lg group-hover:shadow-xl transition-shadow"
                 />
               </div>
               <span className="text-2xl font-bold bg-gradient-to-r from-[#60A5FA] to-[#A78BFA] bg-clip-text text-transparent tracking-tight">Forstek</span>
